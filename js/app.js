@@ -16,471 +16,81 @@ var suffix = '';
 var chartType = $('#chartType option:selected').val();
 var xAxiscategories = [];
 
-if ( chartType == 'column' ) {
-    chartOptions = {
-        chart: {
-            renderTo: 'container',
-            type: chartType,
+chartOptions = {
+    chart: {
+        renderTo: 'container',
+        type: chartType,
+    },
+    title: {
+        text: title
+    },
+    subtitle: {
+        text: source
+    },
+    xAxis: {
+        title:{
+            text: xAxistitle,
         },
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
         title: {
-            text: title
+            text: yAxistitle
         },
-        subtitle: {
-            text: source
-        },
-        xAxis: {
-            title:{
-                text: xAxistitle,
-            },
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: yAxistitle
-            },
-        },
-        tooltip: {
-            formatter: function() {
-                var s = '<b>' + this.x + '</b>';
+    },
+    tooltip: {
+        formatter: function() {
+            var s = '<b>' + this.x + '</b>';
 
-                $.each(this.points, function (i, point) {
-                    s += '<br/><span style="color:'+ point.series.color + ';padding:0">' + this.series.name + '</span>: <b>' +
-                        prefix + this.y + ' ' + suffix + '</b>';
-                });
+            $.each(this.points, function (i, point) {
+                s += '<br/><span style="color:'+ point.series.color + ';padding:0">' + this.series.name + '</span>: <b>' +
+                    prefix + this.y + ' ' + suffix + '</b>';
+            });
 
-                return s;
-            },
-            shared: true,
-            useHTML: true
+            return s;
         },
-        legend: {
-            layout: 'vertical',
-            align: 'left',
-            verticalAlign: 'top',
-            x: 100,
-            y: 70,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            borderWidth: 1
+        shared: true,
+        useHTML: true
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 100,
+        y: 70,
+        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+        borderWidth: 1
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
         },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            },
-            scatter: {
-                marker: {
-                    radius: 5,
-                    states: {
-                        hover: {
-                            enabled: true,
-                            lineColor: 'rgb(100,100,100)'
-                        }
-                    }
-                },
+        scatter: {
+            marker: {
+                radius: 5,
                 states: {
                     hover: {
-                        marker: {
-                            enabled: false
-                        }
+                        enabled: true,
+                        lineColor: 'rgb(100,100,100)'
                     }
-                },
-            }
-        },
-        lang: {
-            thousandsSep: ',',
-            decimalPoint: '.'
-        },
-    }
-} else if ( chartType == 'line' ) {
-    chartOptions = {
-        chart: {
-            renderTo: 'container',
-            type: chartType,
-        },
-        title: {
-            text: title
-        },
-        subtitle: {
-            text: source
-        },
-        xAxis: {
-            title:{
-                text: xAxistitle,
+                }
             },
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: yAxistitle
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            formatter: function() {
-                var s = '<b>' + this.x + '</b>';
-
-                $.each(this.points, function (i, point) {
-                    s += '<br/><span style="color:'+ point.series.color + ';padding:0">' + this.series.name + '</span>: <b>' +
-                        prefix + this.y + ' ' + suffix + '</b>';
-                });
-
-                return s;
-            },
-            shared: true,
-            useHTML: true
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            borderWidth: 1
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            },
-            scatter: {
-                marker: {
-                    radius: 5,
-                    states: {
-                        hover: {
-                            enabled: true,
-                            lineColor: 'rgb(100,100,100)'
-                        }
+            states: {
+                hover: {
+                    marker: {
+                        enabled: false
                     }
-                },
-                states: {
-                    hover: {
-                        marker: {
-                            enabled: false
-                        }
-                    }
-                },
-            }
-        },
-        lang: {
-            thousandsSep: ',',
-            decimalPoint: '.'
-        },
-    }
-} else if ( chartType == 'area' ) {
-    chartOptions = {
-        chart: {
-            renderTo: 'container',
-            type: chartType,
-        },
-        title: {
-            text: title
-        },
-        subtitle: {
-            text: source
-        },
-        xAxis: {
-            title:{
-                text: xAxistitle,
+                }
             },
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: yAxistitle
-            },
-        },
-        tooltip: {
-            formatter: function() {
-                var s = '<b>' + this.x + '</b>';
-
-                $.each(this.points, function (i, point) {
-                    s += '<br/><span style="color:'+ point.series.color + ';padding:0">' + this.series.name + '</span>: <b>' +
-                        prefix + this.y + ' ' + suffix + '</b>';
-                });
-
-                return s;
-            },
-            shared: true,
-            useHTML: true
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'left',
-            verticalAlign: 'top',
-            x: 100,
-            y: 70,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            borderWidth: 1
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            },
-            scatter: {
-                marker: {
-                    radius: 5,
-                    states: {
-                        hover: {
-                            enabled: true,
-                            lineColor: 'rgb(100,100,100)'
-                        }
-                    }
-                },
-                states: {
-                    hover: {
-                        marker: {
-                            enabled: false
-                        }
-                    }
-                },
-            }
-        },
-        lang: {
-            thousandsSep: ',',
-            decimalPoint: '.'
-        },
-    }
-} else if ( chartType == 'areaspline' ) {
-    chartOptions = {
-        chart: {
-            renderTo: 'container',
-            type: chartType,
-        },
-        title: {
-            text: title
-        },
-        subtitle: {
-            text: source
-        },
-        xAxis: {
-            title:{
-                text: xAxistitle,
-            },
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: yAxistitle
-            },
-        },
-        tooltip: {
-            formatter: function() {
-                var s = '<b>' + this.x + '</b>';
-
-                $.each(this.points, function (i, point) {
-                    s += '<br/><span style="color:'+ point.series.color + ';padding:0">' + this.series.name + '</span>: <b>' +
-                        prefix + this.y + ' ' + suffix + '</b>';
-                });
-
-                return s;
-            },
-            shared: true,
-            useHTML: true
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'left',
-            verticalAlign: 'top',
-            x: 100,
-            y: 70,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            borderWidth: 1
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            },
-            scatter: {
-                marker: {
-                    radius: 5,
-                    states: {
-                        hover: {
-                            enabled: true,
-                            lineColor: 'rgb(100,100,100)'
-                        }
-                    }
-                },
-                states: {
-                    hover: {
-                        marker: {
-                            enabled: false
-                        }
-                    }
-                },
-            }
-        },
-        lang: {
-            thousandsSep: ',',
-            decimalPoint: '.'
-        },
-    }
-} else if ( chartType == 'scatter' ) {
-    chartOptions = {
-        chart: {
-            renderTo: 'container',
-            type: chartType,
-        },
-        title: {
-            text: title
-        },
-        subtitle: {
-            text: source
-        },
-        xAxis: {
-            title:{
-                text: xAxistitle,
-            },
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: yAxistitle
-            },
-        },
-        tooltip: {
-            formatter: function() {
-                var s = '<b>' + this.x + '</b>';
-
-                $.each(this.points, function (i, point) {
-                    s += '<br/><span style="color:'+ point.series.color + ';padding:0">' + this.series.name + '</span>: <b>' +
-                        prefix + this.y + ' ' + suffix + '</b>';
-                });
-
-                return s;
-            },
-            shared: true,
-            useHTML: true
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'left',
-            verticalAlign: 'top',
-            x: 100,
-            y: 70,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            borderWidth: 1
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            },
-            scatter: {
-                marker: {
-                    radius: 5,
-                    states: {
-                        hover: {
-                            enabled: true,
-                            lineColor: 'rgb(100,100,100)'
-                        }
-                    }
-                },
-                states: {
-                    hover: {
-                        marker: {
-                            enabled: false
-                        }
-                    }
-                },
-            }
-        },
-        lang: {
-            thousandsSep: ',',
-            decimalPoint: '.'
-        },
-    }
-} else if ( chartType == 'spline' ) {
-    chartOptions = {
-        chart: {
-            renderTo: 'container',
-            type: chartType,
-        },
-        title: {
-            text: title
-        },
-        subtitle: {
-            text: source
-        },
-        xAxis: {
-            title:{
-                text: xAxistitle,
-            },
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: yAxistitle
-            },
-        },
-        tooltip: {
-            formatter: function() {
-                var s = '<b>' + this.x + '</b>';
-
-                $.each(this.points, function (i, point) {
-                    s += '<br/><span style="color:'+ point.series.color + ';padding:0">' + this.series.name + '</span>: <b>' +
-                        prefix + this.y + ' ' + suffix + '</b>';
-                });
-
-                return s;
-            },
-            shared: true,
-            useHTML: true
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'left',
-            verticalAlign: 'top',
-            x: 100,
-            y: 70,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            borderWidth: 1
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            },
-            scatter: {
-                marker: {
-                    radius: 5,
-                    states: {
-                        hover: {
-                            enabled: true,
-                            lineColor: 'rgb(100,100,100)'
-                        }
-                    }
-                },
-                states: {
-                    hover: {
-                        marker: {
-                            enabled: false
-                        }
-                    }
-                },
-            }
-        },
-        lang: {
-            thousandsSep: ',',
-            decimalPoint: '.'
-        },
-    }
+        }
+    },
+    lang: {
+        thousandsSep: ',',
+        decimalPoint: '.'
+    },
 }
 
 chart = new Highcharts.Chart(chartOptions);
