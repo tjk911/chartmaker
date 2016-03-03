@@ -1,10 +1,16 @@
 <?php
   include('header.php')
 ?>
-  <div class="row" style="padding-top:50px;">
+  <div class="row" style="padding-top:50px;padding-bottom:50px;">
     <div class="large-6 columns" id="form">
       <div class="large-12 columns">
-        <h4>1. Select type of chart</h4>
+        <h4>1. Copy & paste CSV data here</h4>
+        <div class="large-12 columns">
+          <label>
+            <textarea placeholder="None" style="height:200px;" id="pastedata"></textarea>
+          </label>
+        </div>
+        <h4>2. Select type of chart</h4>
         <div class="large-12 columns">
           <label>
             <select name="chartType" id="chartType">
@@ -25,14 +31,14 @@
         </div>
       </div>
       <div class="large-12 columns">
-        <h4>2. Title & subtitle/source</h4>
+        <h4>3. Title & subtitle/source</h4>
         <div class="large-12 columns">
           <input type="text" id="title" name="title" placeholder="Title"></input>
         </div>
         <div class="large-12 columns">
           <input type="text" id="source" name="source" placeholder="Source"></input>
         </div>
-        <h4>3. Define xAxis/yAxis title, tooltip prefix/suffix</h4>
+        <h4>4. Define xAxis/yAxis title, tooltip prefix/suffix</h4>
         <div class="large-8 columns">
           <input type="text" id="xAxistitle" name="xAxistitle" placeholder="xAxis title"></input>
         </div>
@@ -60,12 +66,6 @@
             <s>Max</s>
             <input type="number" value="100">
           </label> -->
-        </div>
-        <div class="large-12 columns">
-          <label>
-            Copy and paste the CSV data here
-            <textarea placeholder="None" style="height:400px;" id="pastedata"></textarea>
-          </label>
         </div>
       </div>
     </div>    
