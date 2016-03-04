@@ -1,5 +1,5 @@
 $(document).foundation();
-
+alert("This is for TESTING purposes only");
 lohudmetrics({
     'pagename': 'Chartmaker ripoff',
     'author': 'Kai Teoh'
@@ -15,6 +15,7 @@ var prefix = '';
 var suffix = '';
 var chartType = $('#chartType option:selected').val();
 var xAxiscategories = [];
+var seriesdata = [];
 
 if ( chartType == 'column' ) {
     chartOptions = {
@@ -29,6 +30,7 @@ if ( chartType == 'column' ) {
             text: source
         },
         xAxis: {
+            categories: xAxiscategories,
             title:{
                 text: xAxistitle,
             },
@@ -88,6 +90,7 @@ if ( chartType == 'column' ) {
                 },
             }
         },
+        series: seriesdata,
         lang: {
             thousandsSep: ',',
             decimalPoint: '.'
@@ -106,6 +109,7 @@ if ( chartType == 'column' ) {
             text: source
         },
         xAxis: {
+            categories: xAxiscategories,
             title:{
                 text: xAxistitle,
             },
@@ -168,6 +172,7 @@ if ( chartType == 'column' ) {
                 },
             }
         },
+        series: seriesdata,
         lang: {
             thousandsSep: ',',
             decimalPoint: '.'
@@ -186,6 +191,7 @@ if ( chartType == 'column' ) {
             text: source
         },
         xAxis: {
+            categories: xAxiscategories,
             title:{
                 text: xAxistitle,
             },
@@ -245,6 +251,7 @@ if ( chartType == 'column' ) {
                 },
             }
         },
+        series: seriesdata,
         lang: {
             thousandsSep: ',',
             decimalPoint: '.'
@@ -263,6 +270,7 @@ if ( chartType == 'column' ) {
             text: source
         },
         xAxis: {
+            categories: xAxiscategories,
             title:{
                 text: xAxistitle,
             },
@@ -322,6 +330,7 @@ if ( chartType == 'column' ) {
                 },
             }
         },
+        series: seriesdata,
         lang: {
             thousandsSep: ',',
             decimalPoint: '.'
@@ -340,6 +349,7 @@ if ( chartType == 'column' ) {
             text: source
         },
         xAxis: {
+            categories: xAxiscategories,
             title:{
                 text: xAxistitle,
             },
@@ -399,6 +409,7 @@ if ( chartType == 'column' ) {
                 },
             }
         },
+        series: seriesdata,
         lang: {
             thousandsSep: ',',
             decimalPoint: '.'
@@ -417,6 +428,7 @@ if ( chartType == 'column' ) {
             text: source
         },
         xAxis: {
+            categories: xAxiscategories,
             title:{
                 text: xAxistitle,
             },
@@ -476,6 +488,7 @@ if ( chartType == 'column' ) {
                 },
             }
         },
+        series: seriesdata,
         lang: {
             thousandsSep: ',',
             decimalPoint: '.'
@@ -483,7 +496,15 @@ if ( chartType == 'column' ) {
     }
 }
 
+if (chartOptions == null) {
+    chartOptions = indexOpt;
+}
+
 chart = new Highcharts.Chart(chartOptions);
+
+rebuild = function(){
+    new Highcharts.Chart(chartOptions);
+}
 
 $('#title').change("change", function(e){
     title = $('input#title').val();
@@ -530,7 +551,7 @@ $('#suffix').change("change", function(e){
 });
 
 $('#chartType').change("change", function(e){
-    chartType = $('#chartType option:selected').val();    
+    chartType = $('#chartType option:selected').val();
     for (c = 0; c < chart.series.length; c++){
         var seriesToken = c-1;
         console.log(chart.series[c]);
@@ -538,15 +559,16 @@ $('#chartType').change("change", function(e){
             type: chartType
         })
     }
+    // rebuild();
 });
-
-// $('#chartType').on('change', function() {
-//   alert( this.value ); // or $(this).val()
-// });
 
 $('#pastedata').change("change", function(e){
     $('#container').highcharts().destroy();
     xAxiscategories.length = 0;
+    seriesdata.length = 0;
+
+    
+
     chart = new Highcharts.Chart(chartOptions);
     var index = 1;
 
@@ -572,16 +594,6 @@ $('#pastedata').change("change", function(e){
         withCredentials: undefined
     });
 
-    // These turn into series name = 1800,1900,2012
-    // These turn into categories = Africa, America, Asia, Europe, Oceania
-    // locations,1800,1900,2012
-    // Africa,107,133,1052
-    // America,31,156,954
-    // Asia,635,947,4250
-    // Europe,203,408,740
-    // Oceania,2,6,38
-
-
     for (var i = 0; i < papaparsed['data'].length; i++) {
         // console.log(papaparsed['data'][i]);
 
@@ -604,6 +616,12 @@ $('#pastedata').change("change", function(e){
                         name: papaparsed['data'][i][k],
                         data: data,
                     });
+                    // var tempseries = "name: "+ papaparsed['data'][i][k] +", data:"+data+",";
+                    // console.log(tempseries);
+                    seriesdata.push({
+                        name: papaparsed['data'][i][k],
+                        data: data,
+                    });
                     index += 1;
                     // console.log(index);
                 }
@@ -622,15 +640,44 @@ $('#pastedata').change("change", function(e){
             }
             // end category creation //
 
-            else if ( k > 0 && i > 0) {
-                // console.log(papaparsed['data'][i]);
-                // console.log(papaparsed['data'][i][k]);
-            }
-
-
-
-
         }
     }
     chart.xAxis[0].setCategories(xAxiscategories);
+    // var obj = jQuery.parseJSON(chart);
+    // $('#rendered').text(obj);
+    var displayEl = document.getElementById("rendered");
+    // var test = $("div").remove( ".formelement").html();
+    // var test = $("input:not(:checked)").html();
+    // var test = $("div:not(#form)").html();
+    // displayEl.innerHTML = test;
 });
+
+function generateHTML(){
+    // indexOpt = chartOptions;
+    // $("div").remove(".formelement").html();
+    // $("#banner").remove();
+    // $("button").remove();
+    // $("div").removeClass( "large-6" ).addClass( "large-12" );
+    // chart.reflow();
+    // var displayEl = document.getElementById("rendered");
+    // var test = $('html').html();
+    $.ajax({
+        type: "POST",
+        url: "write.php",
+        data:{
+            chartType: chartType,
+            title: title,
+            source: source,
+            yAxistitle: yAxistitle,
+            xAxistitle: xAxistitle,
+            prefix: prefix,
+            suffix: suffix,
+            xAxiscategories: JSON.stringify(xAxiscategories),
+            seriesdata: JSON.stringify(seriesdata),
+        },
+        success: function(data) {
+          console.log(data);
+        }
+    })
+
+};
