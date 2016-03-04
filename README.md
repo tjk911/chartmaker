@@ -29,7 +29,7 @@ This list is by no means exhaustive
 * Chart options are not fully fleshed out (certain options disabled in the meantime)
 * Tooltip not presenting thousand separator for data
 * xAxis scales appropriately, but intervals cannot be defined yet
-* No ability to export as HTML embed
+~~* No ability to export as HTML embed~~
 
 Contributors
 ==============
