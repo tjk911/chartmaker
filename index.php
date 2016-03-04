@@ -2,7 +2,7 @@
   include('header.php')
 ?>
   <div class="row" style="padding-top:50px;padding-bottom:50px;">
-    <div class="large-6 columns" id="form">
+    <div class="large-6 columns formelement" id="form">
       <div class="large-12 columns">
         <h4>1. Copy & paste CSV data here</h4>
         <div class="large-12 columns">
@@ -15,7 +15,7 @@
           <label>
             <select name="chartType" id="chartType">
               <option value="column" selected="selected">Column</option>
-              <option value="line">Lines</option>
+              <option value="line">Line</option>
               <option value="area">Area</option>
               <option value="areaspline">Area Spline</option>
               <!-- <option value="pie">Pie</option> -->
@@ -70,7 +70,14 @@
       </div>
     </div>    
     <div class="large-6 columns">
-      <div id="container"></div>
+      <div id="container" style="width:100%"></div>
+      <a href="#" class="button" onclick="generateHTML()">Generate chart</a>
+      <div class="callout">
+        <p>Charts currently live on /charts/titlename.html</p>
+        <p>This tool is for TESTING purposes only</p>
+      </div>
+      <!-- <div class="callout" id="rendered"> -->
+      </div>
     </div>
   </div>
 
