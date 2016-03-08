@@ -1,45 +1,10 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-$dir = 'charts';
-
-//  // create new directory with 744 permissions if it does not exist yet
-//  // owner will be the user/group the PHP script is run under
- if ( !file_exists($dir) ) {
-     $oldmask = umask(0);  // helpful when used in linux server  
-     mkdir ($dir, 0744);
- }
- print_r($_POST);
-
-// file_put_contents('new.html', urldecode($_POST$_POST['dom']));
-$chartType = $_POST['chartType'];
-echo $chartType;
-$title = $_POST['title'];
-echo $title;
-$source = $_POST['source'];
-echo $source;
-$yAxistitle = $_POST['yAxistitle'];
-echo $yAxistitle;
-$xAxistitle = $_POST['xAxistitle'];
-echo $xAxistitle;
-$prefix = $_POST['prefix'];
-echo $prefix;
-$suffix = $_POST['suffix'];
-echo $suffix;
-$xAxiscategories = $_POST['xAxiscategories'];
-echo $xAxiscategories;
-$seriesdata = $_POST['seriesdata'];
-echo $seriesdata;
-
-$template = <<<EOD
 <!doctype html>
 <html class="no-js" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{$title}</title>
+    <title> Total Employee Injuries</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.0/foundation.min.css" />
     <link rel="stylesheet" href="../css/app.css" />
   </head>
@@ -60,31 +25,31 @@ $template = <<<EOD
     <script type="text/javascript">
         $(document).foundation();
         lohudmetrics({
-            'pagename': '{$title}',
+            'pagename': ' Total Employee Injuries',
             'author': 'Kai Teoh'
         });
         chartOptions = {
             chart: {
                 renderTo: 'container',
-                type: '{$chartType}',
+                type: 'column',
             },
             title: {
-                text: '{$title}'
+                text: ' Total Employee Injuries'
             },
             subtitle: {
-                text: '{$source}'
+                text: 'Source: MTA Metro-North Railroad'
             },
             xAxis: {
-                categories: {$xAxiscategories},
+                categories: ["2011","2012","2013","2014","2015"],
                 title:{
-                    text: '{$xAxistitle}',
+                    text: '2015 Total FI Goal: 3.00',
                 },
                 crosshair: true
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: '{$yAxistitle}'
+                    text: 'Injuries per 200,000 hours worked'
                 },
             },
             tooltip: {
@@ -93,7 +58,7 @@ $template = <<<EOD
 
                     $.each(this.points, function (i, point) {
                         s += '<br/><span style="color:'+ point.series.color + ';padding:0">' + this.series.name + '</span>: <b>' +
-                            '{$prefix}' + this.y + ' ' + '{$suffix}' + '</b>';
+                            '' + this.y + ' ' + '' + '</b>';
                     });
 
                     return s;
@@ -135,7 +100,7 @@ $template = <<<EOD
                     },
                 }
             },
-            series: {$seriesdata},
+            series: [{"name":"Total FI","data":[3.36,3.07,3.62,3.48,3.8]}],
             lang: {
                 thousandsSep: ',',
                 decimalPoint: '.'
@@ -157,9 +122,3 @@ $template = <<<EOD
     </script>
   </body>
 </html>
-EOD;
-$string = preg_replace('/\s+/', '', $title);
-$lowercase = strtolower($string);
-file_put_contents($dir.'/'.$lowercase.'.html', $template);
-
-?>
